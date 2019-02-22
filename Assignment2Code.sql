@@ -13,7 +13,7 @@ SELECT gender, COUNT(gender) AS numOfEmployees FROM employees
 #Question 3
 #Counts how many employees that were working for the dept number 'd007' between 1985-01-01 and 1991-03-07
 SELECT COUNT(emp_no) AS numOfEmployees FROM dept_emp 
-	WHERE dept_no = 'd007' AND from_date < '1991-03-07' AND to_date > '1985-01-01';
+	WHERE dept_no = 'd007' AND to_date > '1991-03-07' AND from_date < '1986-01-01';
 
 #Question 4
 #Find how many distinct employee numbers there are in the database
