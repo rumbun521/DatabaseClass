@@ -43,3 +43,6 @@ SELECT title, dept_name, MAX(salary), first_name, last_name FROM employees e, de
 SELECT e.emp_no, first_name, last_name, gender, title
 	FROM titles t LEFT JOIN employees e ON e.emp_no = t.emp_no
 	WHERE title = 'engineer';
+    
+SELECT * FROM employees
+	WHERE first_name LIKE '%son';
