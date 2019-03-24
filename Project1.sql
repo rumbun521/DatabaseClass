@@ -71,7 +71,26 @@ SELECT *
             ) as INNERTABLE
 				WHERE years_worked > 10;
                 
-# (3.1) 
+# (3.1) Display titles and departments in one column
+SELECT title as title_and_dept FROM titles
+	UNION 
+		SELECT dept_name FROM departments;
+
+# (3.2) Show employees with department name
+SELECT e.emp_no, first_name, last_name, dept_name
+	FROM employees e, dept_emp de, departments d
+		WHERE e.emp_no = de.emp_no AND de.dept_no = d.dept_no;
+        
+# (3.3) Show employees that are not a department manager
+SELECT emp_no, first_name, last_name
+	FROM employees
+    WHERE emp_no NOT IN (SELECT emp_no FROM dept_manager);
+
+# (3.4) Get the sum, average, and maximum salaries of all employees as well as count how many distinct employees there are
+SELECT count(DISTINCT emp_no) AS total_emp, sum(salary) AS salary_sum, avg(salary) AS average_salary, max(salary) AS max_salary
+	FROM salaries;
+
+
 
 # gets employee names that make more than the average salary
 SELECT DISTINCT first_name, last_name FROM employees e, salaries s
