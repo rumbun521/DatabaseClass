@@ -53,7 +53,25 @@ SELECT e.emp_no, first_name, last_name, salary
     ORDER BY salary DESC
     LIMIT 5;
     
-# (2.2) 
+# (2.2) sort employees based on hire date and department
+SELECT e.emp_no, first_name, last_name, gender, hire_date, dept_no FROM employees e, dept_emp d
+	WHERE e.emp_no = d.emp_no
+	ORDER BY hire_date, dept_no;
+
+# (2.3) Find how many years employees have worked for company who are female
+SELECT emp_no, first_name, last_name, hire_date, DATEDIFF(CURDATE(), hire_date)/365 AS years_worked
+	FROM employees
+	WHERE gender = 'F';
+    
+# (2.4) Find all employees that were hired more than 10 years ago
+SELECT *
+	FROM (
+		SELECT emp_no, first_name, last_name, hire_date, DATEDIFF(CURDATE(), hire_date)/365 AS years_worked
+			FROM employees
+            ) as INNERTABLE
+				WHERE years_worked > 10;
+                
+# (3.1) 
 
 # gets employee names that make more than the average salary
 SELECT DISTINCT first_name, last_name FROM employees e, salaries s
