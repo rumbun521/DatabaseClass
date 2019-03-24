@@ -1,6 +1,9 @@
 #Use the employees database
 USE employees;
 
+
+# PART I
+
 #(1.1) retrieves all information about every employee
 SELECT * FROM employees;
 
@@ -12,14 +15,14 @@ SELECT emp_no FROM titles
 	WHERE title != 'manager';
 
 #(1.4) retrieves emp_no that are not engineers or managers
-SELECT emp_no FROM titles
+SELECT COUNT(emp_no) FROM titles
 	WHERE title != 'manager' AND title != 'engineer';
     
 #(1.5) retrieves employee name and birth date with customized column names
 SELECT first_name AS FirstName, last_name AS LastName, birth_date as BirthDate
 	FROM employees;
     
-# (1.6) concatinates the first name and last name of employees that are female
+# (1.6) concatenates the first name and last name of employees that are female
 SELECT concat(last_name, ', ', first_name) AS name
 	FROM employees
 	WHERE gender = 'f';
@@ -46,6 +49,10 @@ SELECT emp_no, first_name, last_name
 	FROM employees	
     WHERE last_name LIKE '%ian';
 
+
+
+# PART II
+
 # (2.1) Show the top 5 highest salaries with names
 SELECT e.emp_no, first_name, last_name, salary
 	FROM salaries s, employees e
@@ -71,6 +78,9 @@ SELECT *
             ) as INNERTABLE
 				WHERE years_worked > 10;
                 
+                
+# PART III
+
 # (3.1) Display titles and departments in one column
 SELECT title as title_and_dept FROM titles
 	UNION 
@@ -90,6 +100,10 @@ SELECT emp_no, first_name, last_name
 SELECT count(DISTINCT emp_no) AS total_emp, sum(salary) AS salary_sum, avg(salary) AS average_salary, max(salary) AS max_salary
 	FROM salaries;
 
+
+
+# PART IV
+
 # (4.1) Insert a new departmnet into departments table
 INSERT INTO departments (dept_no, dept_name)
 	VALUES ('DP6', 'Customer Relations');
@@ -106,8 +120,6 @@ UPDATE salaries
 
 # (4.4) Delete the new department
 DELETE FROM departments WHERE dept_no = 'DP6';
+SELECT COUNT(dept_no) FROM departments;
 
-# gets employee names that make more than the average salary
-SELECT DISTINCT first_name, last_name FROM employees e, salaries s
-	WHERE e.emp_no = s.emp_no AND salary > (SELECT AVG(salary) FROM salaries);
-    
+
