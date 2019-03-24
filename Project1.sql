@@ -90,7 +90,22 @@ SELECT emp_no, first_name, last_name
 SELECT count(DISTINCT emp_no) AS total_emp, sum(salary) AS salary_sum, avg(salary) AS average_salary, max(salary) AS max_salary
 	FROM salaries;
 
+# (4.1) Insert a new departmnet into departments table
+INSERT INTO departments (dept_no, dept_name)
+	VALUES ('DP6', 'Customer Relations');
+    
+# (4.2) Add a manager for the new department in the employees database
+INSERT  INTO dept_manager (emp_no, dept_no, from_date)
+	SELECT emp_no, dept_no, hire_date
+		FROM employees e, departments d
+        WHERE dept_no = 'DP6' AND e.emp_no = 1;
 
+# (4.3) Give all employees a 10% raise
+UPDATE salaries
+	SET salary = salary * 1.10;
+
+# (4.4) Delete the new department
+DELETE FROM departments WHERE dept_no = 'DP6';
 
 # gets employee names that make more than the average salary
 SELECT DISTINCT first_name, last_name FROM employees e, salaries s
