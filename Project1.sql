@@ -15,7 +15,7 @@ SELECT emp_no FROM titles
 	WHERE title != 'manager';
 
 #(1.4) retrieves emp_no that are not engineers or managers
-SELECT COUNT(emp_no) FROM titles
+SELECT emp_no FROM titles
 	WHERE title != 'manager' AND title != 'engineer';
     
 #(1.5) retrieves employee name and birth date with customized column names
@@ -120,6 +120,6 @@ UPDATE salaries
 
 # (4.4) Delete the new department
 DELETE FROM departments WHERE dept_no = 'DP6';
-SELECT COUNT(dept_no) FROM departments;
+
 
 
