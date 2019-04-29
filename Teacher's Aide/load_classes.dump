@@ -1,4 +1,4 @@
 #Add set of classes to classes table
 INSERT INTO Classes(classID, professorID, schoolID, className, classSubject, classPassword)
-	VALUES (0, 0, 0, 'Relational and Hybrid Databases', "Computer Science", 'password1'), (1, 2, 0, 'Operating Systems', "Computer Science", 'password2');
+	VALUES (0, 0, 0, 'R and H Databases', "CS", 'password1'), (1, 2, 0, 'Operating Systems', "CS", 'password2');
     

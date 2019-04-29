@@ -126,9 +126,6 @@ SOURCE load_professors.dump;
     
 SELECT 'Loading Classes' as 'INFO';
 SOURCE load_classes.dump;    
-    
-SELECT 'Loading Attending' as 'INFO';
-SOURCE load_attending.dump;
 
 SELECT 'Loading calcFeatures' as 'INFO';
 SOURCE load_calcFeatures.dump;
@@ -144,3 +141,6 @@ SOURCE load_devices.dump;
 
 SELECT 'Loading Students' as 'INFO';
 SOURCE load_students.dump;
+
+SELECT 'Loading Attending' as 'INFO';
+SOURCE load_attending.dump;
