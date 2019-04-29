@@ -1,0 +1,3 @@
+#Inserts tennessee state university as a school in the schools table
+INSERT INTO Schools (schoolID, schoolName)
+	VALUES(0, 'Tennessee State University');

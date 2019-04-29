@@ -1,0 +1,4 @@
+#Add set of professors to professor table
+INSERT INTO Professors(professorID, schoolID, firstName, lastName, email, phoneNumber)
+	VALUES (0, 0, 'Manar', 'Samad', 'msamad@tnstate.edu', '123-456-7890'), (1, 0, 'Ali', 'Sekmen', 'asekmen@tnstate.edu', '234-567-8901'), 
+		(2, 0, 'Fenghui', 'Yao', 'fyao@tnstate.edu', '345-678-9012');

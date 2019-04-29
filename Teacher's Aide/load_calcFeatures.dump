@@ -1,0 +1,2 @@
+INSERT INTO calcFeatures(featureID, featureName)
+	VALUES (0, 'Addition'), (1, 'cosin');

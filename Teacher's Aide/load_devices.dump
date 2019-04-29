@@ -1,0 +1,2 @@
+INSERT INTO Devices(deviceID, devicePassword, isDisabled)
+	VALUES ('0', 'password3', 0), ('1', 'password4', 0);

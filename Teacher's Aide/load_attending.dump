@@ -1,0 +1,2 @@
+INSERT INTO Attending(SSN, classID, fromDate, toDate, midGrade, finalGrade)
+	VALUES ('123456789', 0, '2019-01-01', '2019-05-02', 100, 96), ('0000000000', 1, '2019-01-01', '2019-05-02', 83, 94);

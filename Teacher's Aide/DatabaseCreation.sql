@@ -1,5 +1,17 @@
-#create the schema for the teachers aide application if it does not exist already
-CREATE SCHEMA IF NOT EXISTS teachers_aide;
+#create the database
+DROP DATABASE IF EXISTS teachers_aide;
+CREATE DATABASE IF NOT EXISTS teachers_aide;
+USE teachers_aide;
+ 
+#delete all of the tables if they exist
+DROP TABLE IF EXISTS allowing,
+					 attending,
+					 calcFeatures,
+                     classes,
+                     devices,
+                     professors,
+                     schools,
+                     tests;
 
 #Create tables of the database
 CREATE TABLE IF NOT EXISTS Schools (
@@ -40,8 +52,8 @@ CREATE TABLE IF NOT EXISTS CalcFeatures (
 CREATE TABLE IF NOT EXISTS Tests (
 	testID INT NOT NULL,
     classID VARCHAR(10) NOT NULL,
-    startTime DATE NOT NULL,
-    endTime DATE,
+    startTime DATETIME NOT NULL,
+    endTime DATETIME,
     disablePhone INT NOT NULL,
     PRIMARY KEY (testID),
     FOREIGN KEY (classID) REFERENCES Classes(classID),
@@ -71,52 +83,64 @@ CREATE TABLE IF NOT EXISTS Students (
     firstName VARCHAR(20) NOT NULL,
     lastName VARCHAR(20),
     SSN VARCHAR(10) NOT NULL,
-    PRIMARY KEY (studentID),
+    PRIMARY KEY (SSN),
     FOREIGN KEY (deviceID) REFERENCES Devices(deviceID)
     );
     
 CREATE TABLE IF NOT EXISTS Attending (
-	studentID INT NOT NULL,
+	SSN VARCHAR(10) NOT NULL,
     classID VARCHAR(10) NOT NULL,
     fromDate DATE NOT NULL,
     toDate DATE,
     midGrade INT,
     finalGrade INT,
-    PRIMARY KEY (studentID, classID),
-    FOREIGN KEY (studentID) REFERENCES Students(studentID),
+    PRIMARY KEY (SSN, classID),
+    FOREIGN KEY (SSN) REFERENCES Students(SSN),
     FOREIGN KEY (classID) REFERENCES Classes(classID),
     CHECK(fromDate > toDate)
     ); 
 
-#Inserts tennessee state university as a school in the schools table
-INSERT INTO Schools (schoolID, schoolName)
-	VALUES(0, 'Tennessee State University');
-
 #Inserts professors from csv file
-LOAD DATA INFILE 'c:/ProgramData/MySQL/MySQL Server 8.0/Uploads/professors1.csv'
-	INTO TABLE Professors
-    FIELDS TERMINATED BY ','
-    ENCLOSED BY '"'
-    LINES TERMINATED BY '\n'
-    IGNORE 1 ROWS;
-    
-#Add set of professors to professor table
-INSERT INTO Professors(professorID, firstName, lastName, email, phoneNumber)
-	VALUES (0, 0, 'Manar', 'Samad', 'msamad@tnstate.edu', '123-456-7890'), (1, 0, 'Ali', 'Sekmen', 'asekmen@tnstate.edu', '234-567-8901'), 
-		(2, 0, 'Fenghui', 'Yao', 'fyao@tnstate.edu', '345-678-9012');
-    
-#Add set of students to student table
-INSERT INTO Students(studentID, firstName, lastName, SSN)
-	VALUES (0, 'Mike', 'Mohieddin', '123456789'), (1, 'John', 'Doe', '0000000000'), (2, 'Jane', 'Smith', '111111111');
-    
-#Add set of classes to classes table
-INSERT INTO Classes(classID, professorID, schoolID, className, classSubject, classPassword)
-	VALUES ();
-    
-SELECT * FROM Students;
+#LOAD DATA INFILE 'c:/ProgramData/MySQL/MySQL Server 8.0/Uploads/professors1.csv'
+#	INTO TABLE Professors
+#    FIELDS TERMINATED BY ','
+#    ENCLOSED BY '"'
+#    LINES TERMINATED BY '\n'
+#    IGNORE 1 ROWS;
 
 #Create a view for the professors to see all the students according to professor
-CREATE VIEW inClass AS 
-	SELECT s.studentID, s.firstName AS studentFirstName, s.lastName AS studentLastName, p.professorID, p.professorID, 
-		   p.firstName AS professorFirstName, p.lastName AS professorLastName FROM Students s, Classes c, Professors p
-		WHERE s.classID = c.classID AND c.professorID = p.professorID;
+CREATE OR REPLACE VIEW professorsOfStudents AS 
+	SELECT s.StudentID, s.firstName AS studentFirstName, s.lastName AS studentLastName, p.professorID, 
+		   p.firstName AS professorFirstName, p.lastName AS professorLastName FROM Students s, Classes c, Professors p, Attending a
+		WHERE a.classID = c.classID AND p.professorID = c.professorID AND s.SSN = a.SSN;
+
+
+#Load the database info
+FLUSH LOGS;
+
+SELECT 'Loading Schools' as 'INFO';
+SOURCE load_schools.dump;
+    
+SELECT 'Loading Professors' as 'INFO';
+SOURCE load_professors.dump;
+    
+SELECT 'Loading Classes' as 'INFO';
+SOURCE load_classes.dump;    
+    
+SELECT 'Loading Attending' as 'INFO';
+SOURCE load_attending.dump;
+
+SELECT 'Loading calcFeatures' as 'INFO';
+SOURCE load_calcFeatures.dump;
+
+SELECT 'Loading Tests' as 'INFO';
+SOURCE load_tests.dump;
+    
+SELECT 'Loading Allowing' as 'INFO';
+SOURCE load_allowing.dump;
+    
+SELECT 'Loading Devices' as 'INFO';
+SOURCE load_devices.dump;
+
+SELECT 'Loading Students' as 'INFO';
+SOURCE load_students.dump;
